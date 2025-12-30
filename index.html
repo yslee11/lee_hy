@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>가로경관 인식 조사</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏙️</text></svg>">
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- ===== 페이지 1: 기본 정보 입력 ===== -->
+    <section id="page-intro" class="page active">
+      <div class="page-content">
+        <h1 class="title">🏙️ 가로경관 인식 조사</h1>
+        
+        <div class="intro-text">
+          <p>
+            본 설문은 <strong>도시 경관과 보행환경</strong>에 대한 인식을 조사하기 위해 진행됩니다.
+          </p>
+          <p class="notice">
+            📋 <strong>개인정보 보호</strong>: 응답한 정보는 연구 목적으로만 사용되며, 
+            개인을 식별할 수 있는 정보는 수집하지 않습니다.
+          </p>
+        </div>
+
+        <div class="guide-section">
+          <h2>📝 평가 방법</h2>
+          <ul class="guide-list">
+            <li>제시되는 거리 이미지를 보고 <strong>심미성, 감정, 활력, 안정감</strong>을 평가합니다.</li>
+            <li>각 항목은 <strong>1~5점</strong> 리커트 척도로 응답합니다.</li>
+            <li>총 <strong>10개 이미지</strong> 평가가 필요합니다.</li>
+            <li>소요 시간: 약 <strong>5~10분</strong>입니다.</li>
+          </ul>
+        </div>
+
+        <form id="form-intro" class="form-section">
+          <h3>📌 기본 정보</h3>
+          
+          <div class="form-group">
+            <label for="intro-gender">성별 <span class="required">*</span></label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="gender" value="M" required>
+                <span>남성</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="gender" value="F" required>
+                <span>여성</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="intro-age">연령대 <span class="required">*</span></label>
+            <select name="age" id="intro-age" required>
+              <option value="">선택해 주세요</option>
+              <option value="10s">10대</option>
+              <option value="20s">20대</option>
+              <option value="30s">30대</option>
+              <option value="40s">40대</option>
+              <option value="50s">50대</option>
+              <option value="60s_plus">60대 이상</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="intro-occupation">직업 <span class="required">*</span></label>
+            <select name="occupation" id="intro-occupation" required>
+              <option value="">선택해 주세요</option>
+              <option value="student">학생</option>
+              <option value="office_worker">직장인</option>
+              <option value="self_employed">자영업자</option>
+              <option value="service_worker">서비스/현장 노동자</option>
+              <option value="freelancer">프리랜서</option>
+              <option value="homemaker">주부</option>
+              <option value="unemployed">무직</option>
+              <option value="retired">은퇴</option>
+              <option value="other">기타</option>
+            </select>
+          </div>
+
+          <div class="checkbox-agreement">
+            <label>
+              <input type="checkbox" name="agreement" required>
+              <span>위의 정보 제공에 동의합니다.</span>
+            </label>
+          </div>
+        </form>
+
+        <div class="button-group">
+          <button id="btn-start" class="btn btn-primary" disabled>설문 시작</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 페이지 2~11: 이미지 평가 ===== -->
+    <section id="page-survey" class="page">
+      <div class="page-content">
+        <div class="progress-bar">
+          <div id="progress-fill" class="progress-fill"></div>
+          <span id="progress-text" class="progress-text">1 / 10</span>
+        </div>
+
+        <h2>거리 이미지 평가</h2>
+        <p class="survey-description">다음 거리 이미지를 보고 각 항목을 평가해주세요.</p>
+
+        <div class="image-container">
+          <div id="loading-spinner" class="loading-spinner">
+            <div class="spinner"></div>
+            이미지 불러오는 중...
+          </div>
+          <img id="survey-image" alt="거리 경관 이미지" class="survey-image" />
+        </div>
+
+        <form id="form-survey" class="survey-form">
+          <div id="scales-container"></div>
+        </form>
+
+        <div class="button-group">
+          <button id="btn-prev" class="btn btn-secondary" disabled>이전</button>
+          <button id="btn-next" class="btn btn-primary" disabled>다음</button>
+        </div>
+
+        <div id="error-message" class="error-message"></div>
+      </div>
+    </section>
+
+    <!-- ===== 페이지 12: 완료 ===== -->
+    <section id="page-complete" class="page">
+      <div class="page-content complete-content">
+        <div class="success-icon">✅</div>
+        <h2>설문 완료</h2>
+        <p>설문에 참여해 주셔서 감사합니다!</p>
+        <p class="complete-message">
+          응답한 정보는 안전하게 저장되었으며, 
+          연구 목적으로만 사용될 것입니다.
+        </p>
+        <button id="btn-restart" class="btn btn-secondary">다시 시작</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
